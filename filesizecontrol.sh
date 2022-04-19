@@ -17,15 +17,16 @@ FILES=(
 for i in "${FILES[@]}";
     do	
         if [[ -f "$i" ]]; then  # Script statements if $FILE exists.
+            all=($(du $i)) 
+            size=${all[0]} #var2=$(awk '{print $1}' file)
             if [ $size -gt $LIMIT ]; then
-                all=($(du $i)) 
-                size=${all[0]} #var2=$(awk '{print $1}' file) 
-                echo "$i size = $size is greater than $LIMIT"
-                sudo rm -rf $i && echo "removed"
-                echo ""
+               echo "$i size = $size is greater than $LIMIT"
+               sudo cat /dev/null > $i
+               echo "became empty file"
+               echo ""
             else 
-                echo "$i size =$size less than 10MB"
-                echo ""
+               echo "$i size =$size less than 10MB"
+               echo ""
             fi
         else
                 echo "file doesnt exist"
